@@ -21,8 +21,6 @@ class Game:
         pass
     
     def render(self):
-        pyray.begin_drawing()
-        pyray.clear_background(pyray.RAYWHITE)
 
         source_rect = pyray.Rectangle(0, 0, self.block_textures[1].width, self.block_textures[1].height)
         dest_rect = pyray.Rectangle(0, 0, 128, 128)
@@ -30,9 +28,6 @@ class Game:
         pyray.draw_texture_pro(self.block_textures[1], source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
         # pyray.draw_texture(grass_texture,0,0,pyray.RAYWHITE)
         
-        fps = pyray.get_fps()
-        pyray.draw_text(f"FPS: {fps}", 10, 10, 20, pyray.GREEN)
-        pyray.end_drawing()
     
     def run(self):
         self.window.load = self.load
