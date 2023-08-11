@@ -6,32 +6,30 @@ sys.dont_write_bytecode = True
 
 import pyray
 
-# 初始化窗口和瓷砖地图
-pyray.init_window(1280, 720, 'TinyLand')
-window_icon = pyray.load_image('assets/icon/icon.png')
-pyray.set_window_icon(window_icon)
-# set_target_fps(120)
+import engine
+import scene
 
-# 加载图片
-grass_image = pyray.load_image('assets/block/1.png')
-# 创建贴图
-grass_texture = pyray.load_texture_from_image(grass_image)
+class Game:
+    def __init__(self):
+        self.window_width = 1280
+        self.window_height = 720
+        
+        self.window = engine.Window(title = 'TinyLand', width = self.window_width, height = self.window_height)
+        self.window.fps_display = True
+        
+        self.window.init()
 
-while not pyray.window_should_close():
-    pyray.begin_drawing()
-    pyray.clear_background(pyray.RAYWHITE)
+        self.textures_loader = engine.TexturesLoader(folder_path = 'assets/block', file_type = 'png', file_num = 256)
+        self.block_image,self.block_textures = self.textures_loader.load()
 
-    source_rect = pyray.Rectangle(0, 0, grass_texture.width, grass_texture.height)
-    dest_rect = pyray.Rectangle(0, 0, 128, 128)
-    rotation = 0.0
-    pyray.draw_texture_pro(grass_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
-    # pyray.draw_texture(grass_texture,0,0,pyray.RAYWHITE)
-    
-    fps = pyray.get_fps()
-    pyray.draw_text(f"FPS: {fps}", 10, 10, 20, pyray.GREEN)
-    pyray.end_drawing()
+        self.is_scene = 'game'
+        self.scene_list = {
+                        'game':scene.game.Game(self.window,self.block_textures),
+                    }
 
-pyray.close_window()
+        self.scene_list[self.is_scene].run()
 
-pyray.unload_image(grass_image)
-pyray.unload_texture(grass_texture)
+        self.textures_loader.unload()
+        
+if __name__ == '__main__':
+    game = Game()
