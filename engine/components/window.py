@@ -7,13 +7,12 @@ sys.dont_write_bytecode = True
 import pyray
 
 class Window:
-    def __init__(self, title = 'TinyLand', width = 360, height = 180):
-        self.title = title
-        
+    def __init__(self, width = 360, height = 180):
         self.width = width
         self.height = height
         
-        self.icon = 'assets/block/1.png'
+        self.title = 'TinyLand'
+        self.icon = 'assets/icon/icon.png'
         
         self.fps_display = False
         

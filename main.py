@@ -14,7 +14,7 @@ class Game:
         self.window_width = 1280
         self.window_height = 720
         
-        self.window = engine.Window(title = 'TinyLand', width = self.window_width, height = self.window_height)
+        self.window = engine.Window(width = self.window_width, height = self.window_height)
         self.window.fps_display = True
         
         self.window.init()

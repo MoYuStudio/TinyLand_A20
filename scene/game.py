@@ -63,6 +63,7 @@ class Game:
         pass
     
     def render(self):
+        pyray.clear_background(pyray.BLACK)
 
         pyray.begin_mode_2d(pyray.Camera2D(
             pyray.Vector2(self.view_x, self.view_y),
