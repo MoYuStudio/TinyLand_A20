@@ -19,17 +19,17 @@ class Game:
         self.block_width = 16
         self.block_height = 16
         
-        self.blockmap_size = 32
+        self.blockmap_size = 48
         
         self.view_x = 0
         self.view_y = 0
         self.view_speed = 0.06 * self.blockmap_size
         
-        self.zoom_speed = 0.006
+        self.zoom_speed = 0.009
         self.min_zoom = 3
         self.max_zoom = 9
         
-        self.noise_map = engine.NoiseMap(size = 32)
+        self.noise_map = engine.NoiseMap(size = self.blockmap_size)
         self.noise_map = self.noise_map.berlin_noise()
                      
     def load(self):
