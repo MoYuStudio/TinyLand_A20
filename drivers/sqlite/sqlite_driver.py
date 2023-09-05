@@ -106,6 +106,11 @@ if __name__ == '__main__':
     
     columns = sqlite_driver.get_table_columns()
     print(columns)
+    try:
+        buildable_index = columns.index('buildable')
+        print(buildable_index)
+    except ValueError:
+        pass
     
     data = sqlite_driver.read_all()
     print(data)
