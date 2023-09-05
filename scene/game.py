@@ -10,9 +10,8 @@ import engine
 import drivers
 
 class Game:
-    def __init__(self,window,block_textures):
+    def __init__(self,window):
         self.window = window
-        self.block_textures = block_textures
         
         self.render_width = 360
         self.render_height = 180
@@ -34,13 +33,12 @@ class Game:
         self.noise_map = self.noise_map.berlin_noise()
         
         self.sqlite_drive = drivers.SQLiteDriver()
-        columns = self.sqlite_drive.get_table_columns()
-        print(columns)
         
-        data = self.sqlite_drive.read_all()
-        print(data)
+        self.textures_loader = engine.TexturesLoader(folder_path = 'assets/block')
+        self.block_image,self.block_textures = self.textures_loader.load()
+        
+        print(self.block_textures)
             
-                     
     def load(self):
         self.zoom_level = 3.0
         
@@ -89,27 +87,27 @@ class Game:
                 noise_value = self.noise_map[x][y]
                 
                 if -1000 <= noise_value <= 30:
-                    tile_index = 5
+                    tile_index = '5'
                 elif 31 <= noise_value <= 40:
-                    tile_index = 3
+                    tile_index = '3'
                 elif 41 <= noise_value <= 70:
-                    tile_index = 1
+                    tile_index = '1'
                 elif 71 <= noise_value <= 80:
-                    tile_index = 2
+                    tile_index = '2'
                 elif 81 <= noise_value <= 1000:
-                    tile_index = 4
+                    tile_index = '4'
                 else:
-                    tile_index = 0 
+                    tile_index = '0' 
                 
-                if tile_index >= 0 and tile_index < len(self.block_textures):
-                    tile_texture = self.block_textures[tile_index]
+                
+                tile_texture = self.block_textures[tile_index]
 
-                    if tile_texture:
-                        source_rect = pyray.Rectangle(0, 0, tile_texture.width, tile_texture.height)
-                        dest_rect = pyray.Rectangle(self.tile_x, self.tile_y, self.block_width, self.block_height)
-                        rotation = 0.0
+                if tile_texture:
+                    source_rect = pyray.Rectangle(0, 0, tile_texture.width, tile_texture.height)
+                    dest_rect = pyray.Rectangle(self.tile_x, self.tile_y, self.block_width, self.block_height)
+                    rotation = 0.0
 
-                        pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
+                    pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
 
         pyray.end_mode_2d()
         

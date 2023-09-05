@@ -19,12 +19,9 @@ class Game:
         
         self.window.init()
 
-        self.textures_loader = engine.TexturesLoader(folder_path = 'assets/block', file_type = 'png', file_num = 256)
-        self.block_image,self.block_textures = self.textures_loader.load()
-
         self.is_scene = 'game'
         self.scene_list = {
-                        'game':scene.game.Game(self.window,self.block_textures),
+                        'game':scene.game.Game(self.window),
                     }
 
         self.scene_list[self.is_scene].run()

@@ -25,12 +25,12 @@ class SQLiteDriver:
         - write_all(): 尚未实现的方法，用于将数据写入数据库
     '''
 
-    def __init__(self):
+    def __init__(self,path = 'data/data.db'):
         '''
         初始化 SQLiteDriver 类。
         使用指定的数据库文件路径和默认的表名进行初始化。
         '''
-        self.path = 'data/data.db'
+        self.path = path
         self.table_name = 'block'
     
     def connect(self):
