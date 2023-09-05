@@ -7,6 +7,7 @@ sys.dont_write_bytecode = True
 import pyray
 
 import engine
+import drivers
 
 class Game:
     def __init__(self,window,block_textures):
@@ -31,6 +32,14 @@ class Game:
         
         self.noise_map = engine.NoiseMap(size = self.blockmap_size)
         self.noise_map = self.noise_map.berlin_noise()
+        
+        self.sqlite_drive = drivers.SQLiteDriver()
+        columns = self.sqlite_drive.get_table_columns()
+        print(columns)
+        
+        data = self.sqlite_drive.read_all()
+        print(data)
+            
                      
     def load(self):
         self.zoom_level = 3.0
