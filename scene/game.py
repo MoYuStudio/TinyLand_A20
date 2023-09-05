@@ -35,7 +35,7 @@ class Game:
         self.textures_loader = engine.TexturesLoader(folder_path = 'assets/block')
         self.block_image,self.block_textures = self.textures_loader.load()
         
-        self.sqlite_drive = drivers.SQLiteDriver()
+        
             
     def load(self):
         self.zoom_level = 3.0
@@ -44,7 +44,7 @@ class Game:
         self.tile_map_height = self.blockmap_size * self.block_height
 
         self.view_x = (pyray.get_screen_width() - self.tile_map_width) // 2
-        self.view_y = (pyray.get_screen_height() - self.tile_map_height) // 2
+        self.view_y = (pyray.get_screen_height() - self.tile_map_height) // 4
     
     def input(self):
         if pyray.is_key_down(pyray.KEY_W):
@@ -67,8 +67,11 @@ class Game:
         if pyray.is_mouse_button_pressed(pyray.MOUSE_LEFT_BUTTON):
             mouse_pos = pyray.get_mouse_position()
             
-            tile_x = int((mouse_pos.x - self.view_x) / self.block_width)
-            tile_y = int((mouse_pos.y - self.view_y) / self.block_height)
+            mouse_pos_map_x = (mouse_pos.x - self.view_x) / self.zoom_level
+            mouse_pos_map_y = (mouse_pos.y - self.view_y) / self.zoom_level
+            tile_x = int(mouse_pos_map_x / self.block_width)+self.blockmap_size//2
+            tile_y = int(mouse_pos_map_y / self.block_height)+self.blockmap_size//4
+
 
             print("Clicked on tile at ({}, {})".format(tile_x, tile_y))
             if 0 <= tile_x < self.blockmap_size and 0 <= tile_y < self.blockmap_size:
@@ -115,8 +118,11 @@ class Game:
                     source_rect = pyray.Rectangle(0, 0, tile_texture.width, tile_texture.height)
                     dest_rect = pyray.Rectangle(self.tile_x, self.tile_y, self.block_width, self.block_height)
                     rotation = 0.0
-                    transparent_color = pyray.Color(255, 255, 255, 100)
-                    pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, transparent_color)#pyray.RAYWHITE)
+                    if tile_index == '5':
+                        transparent_color = pyray.Color(255, 255, 255, 230)
+                        pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, transparent_color)#pyray.RAYWHITE)
+                    else:
+                        pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
 
         pyray.end_mode_2d()
         
