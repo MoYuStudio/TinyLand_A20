@@ -36,8 +36,6 @@ class Game:
         
         self.textures_loader = engine.TexturesLoader(folder_path = 'assets/block')
         self.block_image,self.block_textures = self.textures_loader.load()
-        
-        print(self.block_textures)
             
     def load(self):
         self.zoom_level = 3.0
@@ -70,6 +68,7 @@ class Game:
         pass
     
     def render(self):
+        
         pyray.clear_background(pyray.BLACK)
 
         pyray.begin_mode_2d(pyray.Camera2D(
@@ -122,6 +121,9 @@ class Game:
         self.window.render = self.render
         
         self.window.set()
+        
+    def kill(self):
+        self.textures_loader.unload()
     
 if __name__ == '__main__':
     pass

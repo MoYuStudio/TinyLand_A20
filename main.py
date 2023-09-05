@@ -25,8 +25,7 @@ class Game:
                     }
 
         self.scene_list[self.is_scene].run()
-
-        self.textures_loader.unload()
+        self.scene_list[self.is_scene].kill()
         
 if __name__ == '__main__':
     game = Game()
