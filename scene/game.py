@@ -64,18 +64,18 @@ class Game:
             if self.zoom_level > self.max_zoom:
                 self.zoom_level = self.max_zoom
                 
-        if pyray.is_mouse_button_pressed(pyray.MOUSE_LEFT_BUTTON):
-            mouse_pos = pyray.get_mouse_position()
+        # if pyray.is_mouse_button_pressed(pyray.MOUSE_LEFT_BUTTON):
+        #     mouse_pos = pyray.get_mouse_position()
             
-            mouse_pos_map_x = (mouse_pos.x - self.view_x) / self.zoom_level
-            mouse_pos_map_y = (mouse_pos.y - self.view_y) / self.zoom_level
-            tile_x = int(mouse_pos_map_x / self.block_width)+self.blockmap_size//2
-            tile_y = int(mouse_pos_map_y / self.block_height)+self.blockmap_size//4
+        #     mouse_pos_map_x = (mouse_pos.x - self.view_x) / self.zoom_level
+        #     mouse_pos_map_y = (mouse_pos.y - self.view_y) / self.zoom_level
+        #     tile_x = int(mouse_pos_map_x / self.block_width)+self.blockmap_size//2
+        #     tile_y = int(mouse_pos_map_y / self.block_height)+self.blockmap_size//4
 
 
-            print("Clicked on tile at ({}, {})".format(tile_x, tile_y))
-            if 0 <= tile_x < self.blockmap_size and 0 <= tile_y < self.blockmap_size:
-                self.noise_map[tile_x][tile_y] = 5
+        #     print("Clicked on tile at ({}, {})".format(tile_x, tile_y))
+        #     if 0 <= tile_x < self.blockmap_size and 0 <= tile_y < self.blockmap_size:
+        #         self.noise_map[tile_x][tile_y] = 5
             
     def logic(self):
         pass

@@ -1,4 +1,6 @@
 
+import pyray
+
 import drivers
 
 class Block:
@@ -47,7 +49,16 @@ class Block:
         pass
     
     def input(self):
-        pass
+        if pyray.is_mouse_button_pressed(pyray.MOUSE_LEFT_BUTTON):
+            mouse_pos = pyray.get_mouse_position()
+            
+            # 计算鼠标点击位置所对应的方块的坐标
+            block_x = int((mouse_pos.x - self.pos['x']) / self.size)
+            block_y = int((mouse_pos.y - self.pos['y']) / self.size)
+            
+            # 打印点击的方块坐标
+            print(f"Clicked on block at ({block_x}, {block_y})")
+    
     
     def logic(self):
         pass
