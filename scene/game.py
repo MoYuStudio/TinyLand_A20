@@ -32,10 +32,10 @@ class Game:
         self.noise_map = engine.NoiseMap(size = self.blockmap_size)
         self.noise_map = self.noise_map.berlin_noise()
         
-        self.sqlite_drive = drivers.SQLiteDriver()
-        
         self.textures_loader = engine.TexturesLoader(folder_path = 'assets/block')
         self.block_image,self.block_textures = self.textures_loader.load()
+        
+        self.sqlite_drive = drivers.SQLiteDriver()
             
     def load(self):
         self.zoom_level = 3.0
@@ -63,7 +63,17 @@ class Game:
             self.zoom_level += self.zoom_speed
             if self.zoom_level > self.max_zoom:
                 self.zoom_level = self.max_zoom
-        
+                
+        if pyray.is_mouse_button_pressed(pyray.MOUSE_LEFT_BUTTON):
+            mouse_pos = pyray.get_mouse_position()
+            
+            tile_x = int((mouse_pos.x - self.view_x) / self.block_width)
+            tile_y = int((mouse_pos.y - self.view_y) / self.block_height)
+
+            print("Clicked on tile at ({}, {})".format(tile_x, tile_y))
+            if 0 <= tile_x < self.blockmap_size and 0 <= tile_y < self.blockmap_size:
+                self.noise_map[tile_x][tile_y] = 5
+            
     def logic(self):
         pass
     
@@ -96,7 +106,7 @@ class Game:
                 elif 81 <= noise_value <= 1000:
                     tile_index = '4'
                 else:
-                    tile_index = '0' 
+                    tile_index = '0'
                 
                 
                 tile_texture = self.block_textures[tile_index]
@@ -105,8 +115,8 @@ class Game:
                     source_rect = pyray.Rectangle(0, 0, tile_texture.width, tile_texture.height)
                     dest_rect = pyray.Rectangle(self.tile_x, self.tile_y, self.block_width, self.block_height)
                     rotation = 0.0
-
-                    pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
+                    transparent_color = pyray.Color(255, 255, 255, 100)
+                    pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, transparent_color)#pyray.RAYWHITE)
 
         pyray.end_mode_2d()
         
