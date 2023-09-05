@@ -43,7 +43,17 @@ class Block:
         self.growing_frame = data[id][growing_frame_index]
         self.timer_list = {'animation':data[id][animation_timer_index],'grow':data[id][growing_timer_index]}
         
-        
+    def load(self):
+        pass
+    
+    def input(self):
+        pass
+    
+    def logic(self):
+        pass
+    
+    def render(self):
+        pass
         
 if __name__ == '__main__':
     pass
