@@ -1,5 +1,4 @@
-
-#-*-coding:utf-8-*-
+# -*- coding: utf-8 -*-
 
 import sys
 sys.dont_write_bytecode = True
@@ -9,8 +8,8 @@ import json
 
 class JsonDriver:
     '''
-        [ MoYuEngine # Json数据管理器 ]
-        
+    [ MoYuEngine # Json数据管理器 ]
+
     功能:  Json数据读写
 
     变量:
@@ -20,21 +19,35 @@ class JsonDriver:
 
     调用:
         self.read() # 读取数据
+        self.write(data_name, write_data) # 写入数据
 
-        self.write(sdata_name,write_data) # 写入数据
+    示例:
+        jm = JsonDriver(path='data/json')
+        jm.read() # 读取数据
+        jm.write('example_data', {'key': 'value'}) # 写入数据
     '''
-    
-    def __init__(self,path='json',read_data={}):
+
+    def __init__(self, path='json', read_data={}):
+        '''
+        初始化 JsonDriver 类。
+
+        参数:
+            path (str): 指定文件夹路径，默认为 'json'。
+            read_data (dict): 存储读取的数据，默认为空字典。
+        '''
         self.path = path
         self.read_data = read_data
         self.write_path = {}
 
     def read(self):
         '''
-            遍历路径 读取json数据 并存入字典
+        遍历路径 读取json数据 并存入字典。
+
+        返回:
+            dict: 读取的数据存储在字典中，键是数据名称，值是数据内容。
         '''
         path_folder = os.path.split(self.path)[-1] # 获取指定文件夹名
-        for parent,dirnames,filenames in os.walk(self.path): # 遍历路径 parent:父目录 dirnames:子目录 filenames:文件
+        for parent, dirnames, filenames in os.walk(self.path): # 遍历路径 parent:父目录 dirnames:子目录 filenames:文件
             for file_name in filenames: # 遍历文件列表
                 folder_name = os.path.basename(parent) # 获取文件夹名
                 var_name = (os.path.splitext(file_name))[0] # 拆解文件名 去除后缀
@@ -51,15 +64,23 @@ class JsonDriver:
                             self.read_data[folder_name+'_'+var_name] = json.load(f) # 将文件内容加载到 read_data 文件名为 folder_name+'_'+var_name
                         except:
                             pass
-            
+
         return self.read_data
 
-    def write(self,data_name,write_data):
+    def write(self, data_name, write_data):
         '''
-            写入json数据
+        写入json数据。
+
+        参数:
+            data_name (str): 数据名称，用于标识要写入的数据。
+            write_data (dict): 要写入的数据。
+
+        示例:
+            jm = JsonDriver(path='data/json')
+            jm.write('example_data', {'key': 'value'}) # 写入数据
         '''
         with open(self.path+'/'+self.write_path[data_name]+'/'+data_name+'.json','w') as f:
-            dumps_data = json.dumps(write_data,indent=4,separators=(',',':'),ensure_ascii=False,skipkeys=True,sort_keys=False)
+            dumps_data = json.dumps(write_data, indent=4, separators=(',', ':'), ensure_ascii=False, skipkeys=True, sort_keys=False)
             f.write(dumps_data)
 
 if __name__ == '__main__':

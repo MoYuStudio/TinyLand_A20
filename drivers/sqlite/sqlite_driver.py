@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import json
 import sqlite3
@@ -6,7 +7,21 @@ class SQLiteDriver:
     '''
     SQLite 数据库读取和写入模块
     
-    这个模块提供了与 SQLite 数据库的交互功能，包括连接、断开连接、读取和写入数据。
+    功能:
+        - 连接到 SQLite 数据库
+        - 获取表的列名
+        - 读取表中的所有数据
+
+    变量:
+        self.path (str): 数据库文件路径
+        self.table_name (str): 默认表名
+
+    调用:
+        - connect(): 连接到数据库
+        - disconnect(): 断开与数据库的连接
+        - get_table_columns(): 获取表的列名
+        - read_all(): 读取表中的所有数据
+        - write_all(): 尚未实现的方法，用于将数据写入数据库
     '''
 
     def __init__(self):
