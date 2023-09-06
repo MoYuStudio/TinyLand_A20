@@ -61,10 +61,7 @@ class Window:
     def render(self):
         pass
     
-    def run(self):
-        pass
-    
-    def kill(self):
+    def clean(self):
         pass
             
 if __name__ == '__main__':

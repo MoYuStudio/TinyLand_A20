@@ -25,7 +25,7 @@ class Game:
                     }
 
         self.scene_list[self.is_scene].run()
-        self.scene_list[self.is_scene].kill()
+        # self.scene_list[self.is_scene].clean()
         
 if __name__ == '__main__':
     game = Game()

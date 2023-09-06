@@ -91,6 +91,7 @@ class Game:
             self.zoom_level
         ))
 
+        # land
         for x in range(0, self.blockmap_size):
             for y in range(0, self.blockmap_size):
                 self.tile_x = (x - y) * self.block_width // 2
@@ -123,8 +124,42 @@ class Game:
                         pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, transparent_color)#pyray.RAYWHITE)
                     else:
                         pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
+                        
+        # building
+        for x in range(0, self.blockmap_size):
+            for y in range(0, self.blockmap_size):
+                self.tile_x = (x - y) * self.block_width // 2
+                self.tile_y = (x + y) * self.block_height // 4 - self.block_height // 2
 
+                noise_value = self.noise_map[x][y]
+                
+                if -1000 <= noise_value <= 30:
+                    tile_index = '5'
+                elif 31 <= noise_value <= 40:
+                    tile_index = '3'
+                elif 41 <= noise_value <= 70:
+                    tile_index = '1'
+                elif 71 <= noise_value <= 80:
+                    tile_index = '2'
+                elif 81 <= noise_value <= 1000:
+                    tile_index = '4'
+                else:
+                    tile_index = '0'
+                
+                
+                tile_texture = self.block_textures[tile_index]
+
+                if tile_texture:
+                    source_rect = pyray.Rectangle(0, 0, tile_texture.width, tile_texture.height)
+                    dest_rect = pyray.Rectangle(self.tile_x, self.tile_y, self.block_width, self.block_height)
+                    rotation = 0.0
+                    if tile_index == '4':
+                        pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
+        
         pyray.end_mode_2d()
+        
+    def clean(self):
+        self.textures_loader.unload()
         
     
     def run(self):
@@ -136,10 +171,10 @@ class Game:
             
         self.window.render = self.render
         
+        self.window.clean = self.clean
+        
         self.window.set()
         
-    def kill(self):
-        self.textures_loader.unload()
     
 if __name__ == '__main__':
     pass
