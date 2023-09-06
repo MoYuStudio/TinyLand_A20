@@ -1,4 +1,4 @@
 
 from .components import *
 
-from . import blockmap
+from .blockmap import BlockMap
