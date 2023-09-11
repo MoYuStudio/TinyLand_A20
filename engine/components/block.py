@@ -64,10 +64,10 @@ class Block:
     def logic(self):
         pass
     
-    def render(self):
+    def render(self,tile_x, tile_y, block_width, block_height):
         tile_texture = self.block_textures[self.render_id]
         source_rect = pyray.Rectangle(0, 0, tile_texture.width, tile_texture.height)
-        dest_rect = pyray.Rectangle(self.tile_x, self.tile_y, self.block_width, self.block_height)
+        dest_rect = pyray.Rectangle(tile_x, tile_y, block_width, block_height)
         rotation = 0.0
         
         pyray.draw_texture_pro(tile_texture, source_rect, dest_rect, pyray.Vector2(0, 0), rotation, pyray.RAYWHITE)
